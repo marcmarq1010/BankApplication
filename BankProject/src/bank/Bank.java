@@ -67,9 +67,45 @@ public class Bank
 
     }
     
-    public void convertCurrency(String selling, double amount, String buying)
+    public void convertCurrency(String selling, double amount, String buying) 
     {
-    	
+        double convertedAmount = 0;
+        String currencySymbol = "";
+        
+        if (selling.equals("USD")) 
+        {
+            if (!exchangeRates.containsKey(buying)) 
+            {
+                System.out.println("Exchange rate not found for " + buying);
+                return;
+            }
+            Currency exchangeRate = exchangeRates.get(buying);
+            
+            convertedAmount = amount / exchangeRate.getExchangeRate();
+        } 
+        else if (buying.equals("USD")) 
+        {
+            if (!exchangeRates.containsKey(selling)) 
+            {
+                System.out.println("Exchange rate not found for " + selling);
+                return;
+            }
+            Currency exchangeRate = exchangeRates.get(selling);
+            convertedAmount = amount * exchangeRate.getExchangeRate();
+        } 
+        else 
+        {
+            if (!exchangeRates.containsKey(selling) || !exchangeRates.containsKey(buying)) 
+            {
+                System.out.println("Exchange rate not found for " + selling + " or " + buying);
+                return;
+            }
+            Currency exchangeRate1 = exchangeRates.get(selling);
+            Currency exchangeRate2 = exchangeRates.get(buying);
+            convertedAmount = amount * exchangeRate1.getExchangeRate() / exchangeRate2.getExchangeRate();
+        }
+        
+        System.out.println(currencySymbol + " " + convertedAmount);
     }
     
     // method to get all accounts in the bank
