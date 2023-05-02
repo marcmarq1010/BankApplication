@@ -1,5 +1,6 @@
 package bank;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,8 @@ import Transaction.Transaction;
 import account.Account;
 import account.CheckingAccount;
 import account.SavingAccount;
+import currency.Currency;
+import currency.CurrencyExchangeReader;
 import customer.Customer;
 import exceptions.NoSuchAccountException;
 import ui.Messages;
@@ -16,11 +19,13 @@ import ui.Messages;
 public class Bank 
 {
 	private Map<Integer, Account> accounts; // map to store all the bank accounts
+    private static Map<String, Currency> exchangeRates = new HashMap<>(); // map to store exchange rates for different currencies
 
     // constructor to initialize the map of accounts
     public Bank() 
     {
         accounts = new HashMap<Integer, Account>();
+        readCurrencyFile();
     }
 
     // method to open a new checking account for a customer
@@ -44,8 +49,25 @@ public class Bank
         // return the new savings account object
     	return savingsAccount;
     }
+    
+    
+    public void readCurrencyFile()
+    {
+	    CurrencyExchangeReader reader = new CurrencyExchangeReader();
 
- // method to get all accounts in the bank
+			try 
+			{
+				Map<String, Currency> currencies = reader.read("exchange-rate.csv");
+			}
+			catch (IOException e) 
+			{
+				// handle the exception here, e.g. print an error message
+	            System.out.println(e.getMessage());
+			}
+
+    }
+    
+    // method to get all accounts in the bank
     public List<Account> getAllAccounts() 
     {
         // return the list of accounts

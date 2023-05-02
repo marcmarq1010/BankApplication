@@ -55,40 +55,48 @@ public class BankingApp
                     accountStatement(); // Call method to print statement for a specific account
                     break;
                 case 5:
-                    depositFunds(); // Call method to deposit funds into a specific account
+                    showAccountInformation(); // Call method to print account information
                     break;
                 case 6:
-                    withdrawFunds(); // Call method to withdraw funds from a specific account
+                    depositFunds(); // Call method to deposit funds into a specific account
                     break;
                 case 7:
-                    closeAccount(); // Call method to close a specific account
+                    withdrawFunds(); // Call method to withdraw funds from a specific account
                     break;
                 case 8:
-                    saveTransactions(); // Call method to save transactions to a txt file
+                    closeAccount(); // Call method to close a specific account
                     break;
                 case 9:
+                    saveTransactions(); // Call method to save transactions to a txt file
+                    break;
+                case 10:
+                    currencyConversion(); // Call method to convert currency
+                    break;
+                case 11:
                     // Display message that the program is exiting
                     break;
                 default:
                    System.out.println(Messages.MENU_INVALID_CHOICE); // Display message for an invalid choice
             }
         } 
-        while (choice != 9); // Continue the loop until user chooses to exit
+        while (choice != 11); // Continue the loop until user chooses to exit
     }
     
     private void displayMenu() 
     {
         System.out.println("");
-    	System.out.println(Messages.MENU_TITLE); // Display the menu title
-        System.out.println(Messages.MENU_OPTION_1); // Display option to create a new checking account
-        System.out.println(Messages.MENU_OPTION_2); // Display option to create a new saving account
-        System.out.println(Messages.MENU_OPTION_3); // Display option to list all the created accounts
-        System.out.println(Messages.MENU_OPTION_4); // Display option to print statement for a specific account
-        System.out.println(Messages.MENU_OPTION_5); // Display option to deposit funds into a specific account
-        System.out.println(Messages.MENU_OPTION_6); // Display option to withdraw funds from a specific account
-        System.out.println(Messages.MENU_OPTION_7); // Display option to close a specific account
-        System.out.println(Messages.MENU_OPTION_8); // Display option to save the transactions to a txt file
-        System.out.println(Messages.MENU_OPTION_9); // Display option to exit the program 
+    	System.out.println(Messages.MENU_TITLE); 	 // Display the menu title
+        System.out.println(Messages.MENU_OPTION_1);  // Display option to create a new checking account
+        System.out.println(Messages.MENU_OPTION_2);  // Display option to create a new saving account
+        System.out.println(Messages.MENU_OPTION_3);  // Display option to list all the created accounts
+        System.out.println(Messages.MENU_OPTION_4);  // Display option to print statement for a specific account
+        System.out.println(Messages.MENU_OPTION_5);  // Display option to print account information 
+        System.out.println(Messages.MENU_OPTION_6);  // Display option to deposit funds into a specific account
+        System.out.println(Messages.MENU_OPTION_7);  // Display option to withdraw funds from a specific account
+        System.out.println(Messages.MENU_OPTION_8);  // Display option to close a specific account
+        System.out.println(Messages.MENU_OPTION_9);  // Display option to save the transactions to a txt file
+        System.out.println(Messages.MENU_OPTION_10); // Display option to convert currency
+        System.out.println(Messages.MENU_OPTION_11); // Display option to exit the program
         System.out.println("");
         System.out.println(Messages.ENTER_MENU_CHOICE); // Prompt user to enter their choice
     }
@@ -155,6 +163,11 @@ public class BankingApp
         }
     }
 
+    private void showAccountInformation()
+    {
+    	System.out.println("FIXME: Add functionality!");
+    }
+    
     // Method to deposit funds into an account
     private void depositFunds()
     {   
@@ -263,6 +276,11 @@ public class BankingApp
             // handle the exception here, e.g. print an error message
             System.out.println(Messages.FILE_SAVING_ERROR_EXCEPTION);
         }
+    }
+    
+    public void currencyConversion()
+    {
+    	System.out.println("FIXME: Add functionality!");
     }
 
 }   

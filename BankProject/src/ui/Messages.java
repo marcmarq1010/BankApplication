@@ -10,15 +10,17 @@ public class Messages
 	public static final String MENU_HEADER = "Banking App Menu";
 	
 	// Menu options
-	public static final String MENU_OPTION_1 = "1. Open a Checking account";
-	public static final String MENU_OPTION_2 = "2. Open a Saving account";
-	public static final String MENU_OPTION_3 = "3. List Accounts";
-	public static final String MENU_OPTION_4 = "4. Account Statement";
-	public static final String MENU_OPTION_5 = "5. Deposit funds";
-	public static final String MENU_OPTION_6 = "6. Withdraw funds";
-	public static final String MENU_OPTION_7 = "7. Close an account";
-	public static final String MENU_OPTION_8 = "8. Save Transactions";
-	public static final String MENU_OPTION_9 = "9. Exit";
+	public static final String MENU_OPTION_1 = "1.  Open a Checking account";
+	public static final String MENU_OPTION_2 = "2.  Open a Saving account";
+	public static final String MENU_OPTION_3 = "3.  List Accounts";
+	public static final String MENU_OPTION_4 = "4.  Account Statement";
+	public static final String MENU_OPTION_5 = "5.  Show Account Information";
+	public static final String MENU_OPTION_6 = "6.  Deposit funds";
+	public static final String MENU_OPTION_7 = "7.  Withdraw funds";
+	public static final String MENU_OPTION_8 = "8.  Close an account";
+	public static final String MENU_OPTION_9 = "9.  Save Transactions";
+	public static final String MENU_OPTION_10 = "10. Currency Conversion";
+	public static final String MENU_OPTION_11 = "11. Exit";
 	
 	// Input prompts
     public static final String ENTER_MENU_CHOICE = "Enter your choice: ";
@@ -66,6 +68,8 @@ public class Messages
     public static final String INSUFFICIENT_BALANCE_EXCEPTION = "There are not enough funds to make a withdrawal.";
     public static final String NO_SUCH_ACCOUNT_EXCEPTION = "Account does not exist";
     public static final String FILE_SAVING_ERROR_EXCEPTION = "Error saving transactions to file.";
+    public static final String FILE_NOT_FOUND_EXCEPTION = "Currency file not found. Currency conversion service and Foreign Currency accounts are not available.";
+    public static final String IO_EXCEPTION = "Error reading currency file. Currency conversion service and Foreign Currency accounts are not available.";
     
     // File messages
     public static final String FILE_TRANSACTIONS = " Transactions.txt";
