@@ -17,7 +17,8 @@ public class Messages
 	public static final String MENU_OPTION_5 = "5. Deposit funds";
 	public static final String MENU_OPTION_6 = "6. Withdraw funds";
 	public static final String MENU_OPTION_7 = "7. Close an account";
-	public static final String MENU_OPTION_8 = "8. Exit";
+	public static final String MENU_OPTION_8 = "8. Save Transactions";
+	public static final String MENU_OPTION_9 = "9. Exit";
 	
 	// Input prompts
     public static final String ENTER_MENU_CHOICE = "Enter your choice: ";
@@ -64,5 +65,10 @@ public class Messages
     public static final String ACCOUNT_CLOSED_EXCEPTION = "Account is closed. Can not deposit into a closed account with a zero balance or positive balance";
     public static final String INSUFFICIENT_BALANCE_EXCEPTION = "There are not enough funds to make a withdrawal.";
     public static final String NO_SUCH_ACCOUNT_EXCEPTION = "Account does not exist";
+    public static final String FILE_SAVING_ERROR_EXCEPTION = "Error saving transactions to file.";
+    
+    // File messages
+    public static final String FILE_TRANSACTIONS = " Transactions.txt";
+    public static final String FILE_SUCCESS = "Transactions saved to file: ";
 }
 

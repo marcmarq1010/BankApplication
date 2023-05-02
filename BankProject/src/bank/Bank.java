@@ -15,12 +15,12 @@ import ui.Messages;
 
 public class Bank 
 {
-	private List<Account> accounts; // list to store all the bank accounts
+	private Map<Integer, Account> accounts; // map to store all the bank accounts
 
-    // constructor to initialize the list of accounts
+    // constructor to initialize the map of accounts
     public Bank() 
     {
-        accounts = new ArrayList<Account>();
+        accounts = new HashMap<Integer, Account>();
     }
 
     // method to open a new checking account for a customer
@@ -28,8 +28,8 @@ public class Bank
     {
         // create a new checking account object with the given parameters
         CheckingAccount checkingAccount = new CheckingAccount(customer, overdraftLimit, initialDeposit);
-        // add the checking account to the list of accounts
-        accounts.add(checkingAccount);
+        // add the checking account to the map of accounts with its account number as the key
+        accounts.put(checkingAccount.getAccountNumber(), checkingAccount);
         // return the new checking account object
         return checkingAccount;
     }
@@ -39,42 +39,31 @@ public class Bank
     {
         // create a new savings account object with the given parameters
         SavingAccount savingsAccount = new SavingAccount(customer, initialDeposit);
-        // add the savings account to the list of accounts
-        accounts.add(savingsAccount);
+        // add the savings account to the map of accounts with its account number as the key
+        accounts.put(savingsAccount.getAccountNumber(), savingsAccount);
         // return the new savings account object
     	return savingsAccount;
     }
 
-    // method to get all accounts in the bank
+ // method to get all accounts in the bank
     public List<Account> getAllAccounts() 
     {
-    	// return the list of accounts
-    	return accounts;
+        // return the list of accounts
+        return new ArrayList<Account>(accounts.values());
     }
+
 
     // method to find an account by its account number
     public Account findAccount(int accountNumber) throws NoSuchAccountException
     {
-        try
+        // get the account from the map using its account number as the key
+        Account account = accounts.get(accountNumber);
+        // if account not found, throw NoSuchAccountException
+        if (account == null)
         {
-            // loop through all accounts in the list
-            for (Account account : accounts) 
-            {
-                // if the account number matches, return the account
-                if (account.getAccountNumber() == accountNumber)
-                {
-                    return account;
-                }
-            }
-            // if account not found, throw NoSuchAccountException
             throw new NoSuchAccountException(Messages.NO_SUCH_ACCOUNT_EXCEPTION);
         }
-        catch (NoSuchAccountException e)
-        {
-            // re-throw the exception so that it can be handled elsewhere
-            throw e;
-        }
+        // return the account
+        return account;
     }
-
-
 }

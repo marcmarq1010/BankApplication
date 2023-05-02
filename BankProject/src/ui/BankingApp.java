@@ -1,5 +1,8 @@
 package ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -61,13 +64,16 @@ public class BankingApp
                     closeAccount(); // Call method to close a specific account
                     break;
                 case 8:
+                    saveTransactions(); // Call method to save transactions to a txt file
+                    break;
+                case 9:
                     // Display message that the program is exiting
                     break;
                 default:
                    System.out.println(Messages.MENU_INVALID_CHOICE); // Display message for an invalid choice
             }
         } 
-        while (choice != 8); // Continue the loop until user chooses to exit
+        while (choice != 9); // Continue the loop until user chooses to exit
     }
     
     private void displayMenu() 
@@ -81,7 +87,8 @@ public class BankingApp
         System.out.println(Messages.MENU_OPTION_5); // Display option to deposit funds into a specific account
         System.out.println(Messages.MENU_OPTION_6); // Display option to withdraw funds from a specific account
         System.out.println(Messages.MENU_OPTION_7); // Display option to close a specific account
-        System.out.println(Messages.MENU_OPTION_8); // Display option to exit the program
+        System.out.println(Messages.MENU_OPTION_8); // Display option to save the transactions to a txt file
+        System.out.println(Messages.MENU_OPTION_9); // Display option to exit the program 
         System.out.println("");
         System.out.println(Messages.ENTER_MENU_CHOICE); // Prompt user to enter their choice
     }
@@ -146,7 +153,6 @@ public class BankingApp
         	// handle the exception here, e.g. print an error message
             System.out.println(e.getMessage());
         }
-
     }
 
     // Method to deposit funds into an account
@@ -201,7 +207,6 @@ public class BankingApp
     // Method to close an account
     private void closeAccount()
     {
-       
 		try 
 		{
 			// Find the account by its account number
@@ -215,4 +220,51 @@ public class BankingApp
             System.out.println(e.getMessage());
 		}       
     }
+    
+    // Method to save transactions to a file
+    private void saveTransactions() 
+    {
+        try 
+        {
+            // Find the account by its account number
+            Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
+
+            // Get all transactions for the account
+            transactions = ac.getAllTransactions();
+
+            // Create the file name based on the account number
+            String fileName = ac.getAccountNumber() + Messages.FILE_TRANSACTIONS;
+
+            // Create a new file with the given file name
+            File file = new File(fileName);
+
+            // Create a PrintWriter to write to the file
+            PrintWriter writer = new PrintWriter(file);
+
+            // Loop through each transaction and write its information to the file
+            for (Transaction transaction : transactions) 
+            {
+                writer.println(transaction);
+            }
+
+            // Close the PrintWriter
+            writer.close();
+
+            // Print a success message
+            System.out.println(Messages.FILE_SUCCESS + fileName);
+        } 
+        catch (NoSuchAccountException e) 
+        {
+            // handle the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
+        } 
+        catch (IOException e) 
+        {
+            // handle the exception here, e.g. print an error message
+            System.out.println(Messages.FILE_SAVING_ERROR_EXCEPTION);
+        }
+    }
+
 }   
+
+
