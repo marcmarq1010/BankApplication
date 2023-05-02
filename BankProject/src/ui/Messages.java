@@ -74,5 +74,12 @@ public class Messages
     // File messages
     public static final String FILE_TRANSACTIONS = " Transactions.txt";
     public static final String FILE_SUCCESS = "Transactions saved to file: ";
+    
+    // Currency statements
+    public static final String CURRENCY_SELLING = "The currency you are selling : ";
+    public static final String CURRENCY_AMOUNT_TO_BE_SOLD = "The amount you are selling : ";
+    public static final String CURRENCY_BUYING = "The currency you are buying : ";
+    public static final String CURRENCY_RATE_IS = "The exchange rate is ";
+    public static final String CURRENCY_AMOUNT_GIVEN = "and you will get " ;
 }
 

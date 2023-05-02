@@ -280,7 +280,9 @@ public class BankingApp
     
     public void currencyConversion()
     {
-    	System.out.println("FIXME: Add functionality!");
+    	bank.convertCurrency(IU.getString(Messages.CURRENCY_SELLING), IU.getDouble(Messages.CURRENCY_AMOUNT_TO_BE_SOLD), IU.getString(Messages.CURRENCY_BUYING));
+    	
+    	//System.out.println(Messages.CURRENCY_RATE_IS + getRate + Messages.CURRENCY_AMOUNT_GIVEN + rateCode + amount);
     }
 
 }   

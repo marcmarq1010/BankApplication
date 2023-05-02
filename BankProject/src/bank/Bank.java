@@ -50,14 +50,14 @@ public class Bank
     	return savingsAccount;
     }
     
-    
+    // method to read a file and store exchange rates
     public void readCurrencyFile()
     {
 	    CurrencyExchangeReader reader = new CurrencyExchangeReader();
 
 			try 
 			{
-				Map<String, Currency> currencies = reader.read("exchange-rate.csv");
+				exchangeRates = reader.read("exchange-rate.csv");
 			}
 			catch (IOException e) 
 			{
@@ -65,6 +65,11 @@ public class Bank
 	            System.out.println(e.getMessage());
 			}
 
+    }
+    
+    public void convertCurrency(String selling, double amount, String buying)
+    {
+    	
     }
     
     // method to get all accounts in the bank
