@@ -143,56 +143,76 @@ public class BankingApp
         } 
         catch (NoSuchAccountException e) 
         {
-            System.out.println("Account not found: " + e.getMessage());
+        	// handle the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
         }
 
     }
 
     // Method to deposit funds into an account
     private void depositFunds()
-    {
-        // Find the account by its account number
-        Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
-        
-        // Check if the account exists
-        if(ac == null)
+    {   
+        try 
         {
-            System.out.println(Messages.ACCOUNT_NOT_FOUND);
+        	 // Find the account by its account number
+            Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
+            // Deposit the specified amount into the account
+            ac.deposit(IU.getDouble(Messages.ENTER_DEPOSIT_AMOUNT), ac);
+        } 
+        catch (NoSuchAccountException e) 
+        {
+            // handle the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
+        } 
+        catch (AccountClosedException e) 
+        {
+            // handle the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
         }
-        
-        // Deposit the specified amount into the account
-        ac.deposit(IU.getDouble(Messages.ENTER_DEPOSIT_AMOUNT), ac);
     }
 
     // Method to withdraw funds from an account
     private void withdrawFunds()
     {
-        // Find the account by its account number
-        Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
-        
-        // Check if the account exists
-        if(ac == null)
+        try 
         {
-            System.out.println(Messages.ACCOUNT_NOT_FOUND);
-        }
-        
-        // Withdraw the specified amount from the account
-        ac.withdraw(IU.getDouble(Messages.ENTER_DEPOSIT_AMOUNT), ac);
+        	 // Find the account by its account number
+            Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
+            // Withdraw the specified amount from the account
+            ac.withdraw(IU.getDouble(Messages.ENTER_DEPOSIT_AMOUNT), ac);
+        } 
+        catch (NoSuchAccountException e) 
+        {
+            // handle the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
+        } 
+        catch (AccountClosedException e) 
+        {
+            // handle the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
+        } 
+        catch (InsufficientBalanceException e)
+        {
+        	// handle the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
+		}
     }
 
     // Method to close an account
     private void closeAccount()
     {
-        // Find the account by its account number
-        Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
-        
-        // Check if the account exists
-        if(ac == null)
-        {
-            System.out.println(Messages.ACCOUNT_NOT_FOUND);
-        }
-        
-        // Set the account to be closed
-        ac.setAccountClose(false);
+       
+		try 
+		{
+			// Find the account by its account number
+	        Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
+			// Set the account to be closed
+	        ac.setAccountClose(false);
+		} 
+		catch (NoSuchAccountException e) 
+		{
+			// handle the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
+		}       
     }
 }   

@@ -42,6 +42,8 @@ public class Messages
     public static final String WITHDRAWAL_SUCCESSFUL = "Withdrawal successful!";
     public static final String DEPOSIT_FAILED = "Deposit failed!";
     public static final String WITHDRAWAL_FAILED = "Withdrawal failed! The new balance is ";
+    public static final String IS_DEPOSIT = "Depsosit";
+    public static final String IS_WITHDRAWAL = "Withdrawal";
     
     // Input prompts open account
     public static final String ENTER_FIRST_NAME = "Enter first name: ";
@@ -55,9 +57,12 @@ public class Messages
     public static final String ACCOUNT_TYPE = "Account type: ";
     public static final String ACCOUNT_NUMBER = "Account number: ";
     public static final String ACCOUNT_BALANCE = "Account balance: ";
+    public static final String ACCOUNT_OPEN = "Open";
+    public static final String ACCOUNT_CLOSE = "Closed";
     
     // Exception messages
     public static final String ACCOUNT_CLOSED_EXCEPTION = "Account is closed. Can not deposit into a closed account with a zero balance or positive balance";
     public static final String INSUFFICIENT_BALANCE_EXCEPTION = "There are not enough funds to make a withdrawal.";
+    public static final String NO_SUCH_ACCOUNT_EXCEPTION = "Account does not exist";
 }
 

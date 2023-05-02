@@ -64,7 +64,7 @@ public class Account
                 // add the deposited amount to the current balance
                 setBalance(balance + amount);
                 // create a new transaction with details of the fromAccount, deposited amount, and "Deposit" as the transaction type
-                transactions.add(new Transaction(fromAccount, amount, "Deposit"));
+                transactions.add(new Transaction(fromAccount, amount, Messages.IS_DEPOSIT));
             }
             else if(!fromAccount.isOpen())
             {
@@ -104,7 +104,7 @@ public class Account
                 // Subtract the amount from the account balance
                 setBalance(balance - amount);
                 // Add the transaction to the list of transactions
-                transactions.add(new Transaction(toAccount, amount, "Withdrawal"));
+                transactions.add(new Transaction(toAccount, amount, Messages.IS_WITHDRAWAL));
             }
         } 
         catch (AccountClosedException e) 
@@ -159,11 +159,11 @@ public class Account
     {
     	if(isOpen)
     	{
-    		return "Open";
+    		return Messages.ACCOUNT_OPEN;
     	}
     	else
     	{
-    		return "Closed";
+    		return Messages.ACCOUNT_CLOSE;
     	}
     }
 

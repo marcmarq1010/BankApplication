@@ -11,6 +11,7 @@ import account.CheckingAccount;
 import account.SavingAccount;
 import customer.Customer;
 import exceptions.NoSuchAccountException;
+import ui.Messages;
 
 public class Bank 
 {
@@ -66,7 +67,7 @@ public class Bank
                 }
             }
             // if account not found, throw NoSuchAccountException
-            throw new NoSuchAccountException("Account with account number " + accountNumber + " not found.");
+            throw new NoSuchAccountException(Messages.NO_SUCH_ACCOUNT_EXCEPTION);
         }
         catch (NoSuchAccountException e)
         {
