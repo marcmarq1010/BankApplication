@@ -10,6 +10,7 @@ import account.Account;
 import account.CheckingAccount;
 import account.SavingAccount;
 import customer.Customer;
+import exceptions.NoSuchAccountException;
 
 public class Bank 
 {
@@ -51,18 +52,28 @@ public class Bank
     }
 
     // method to find an account by its account number
-    public Account findAccount(int accountNumber)
+    public Account findAccount(int accountNumber) throws NoSuchAccountException
     {
-        // loop through all accounts in the list
-        for (Account account : accounts) 
+        try
         {
-            // if the account number matches, return the account
-            if (account.getAccountNumber() == accountNumber)
+            // loop through all accounts in the list
+            for (Account account : accounts) 
             {
-                return account;
+                // if the account number matches, return the account
+                if (account.getAccountNumber() == accountNumber)
+                {
+                    return account;
+                }
             }
+            // if account not found, throw NoSuchAccountException
+            throw new NoSuchAccountException("Account with account number " + accountNumber + " not found.");
         }
-        // if account not found, return null
-        return null;
+        catch (NoSuchAccountException e)
+        {
+            // re-throw the exception so that it can be handled elsewhere
+            throw e;
+        }
     }
+
+
 }

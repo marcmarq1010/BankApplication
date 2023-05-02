@@ -10,6 +10,9 @@ import account.CheckingAccount;
 import account.SavingAccount;
 import bank.Bank;
 import customer.Customer;
+import exceptions.AccountClosedException;
+import exceptions.InsufficientBalanceException;
+import exceptions.NoSuchAccountException;
 
 public class BankingApp 
 {
@@ -25,7 +28,7 @@ public class BankingApp
         scanner = new Scanner(System.in); // Initialize the Scanner object to read user input
     }
     
-    public void start() 
+    public void start()
     {
         int choice;
         do 
@@ -123,19 +126,26 @@ public class BankingApp
     }
 
     // Method to generate an account statement
-    private void accountStatement() 
+    private void accountStatement()
     {
         // Find the account by its account number
-        Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
-        
-        // Get all transactions for the account
-        transactions = ac.getAllTransactions();
-        
-        // Loop through each transaction and print its information
-        for (Transaction transaction : transactions) 
+        try 
         {
-            System.out.println(transaction);
+            Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
+            // Get all transactions for the account
+            transactions = ac.getAllTransactions();
+
+            // Loop through each transaction and print its information
+            for (Transaction transaction : transactions) 
+            {
+                System.out.println(transaction);
+            }
+        } 
+        catch (NoSuchAccountException e) 
+        {
+            System.out.println("Account not found: " + e.getMessage());
         }
+
     }
 
     // Method to deposit funds into an account
@@ -155,7 +165,7 @@ public class BankingApp
     }
 
     // Method to withdraw funds from an account
-    private void withdrawFunds() 
+    private void withdrawFunds()
     {
         // Find the account by its account number
         Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));

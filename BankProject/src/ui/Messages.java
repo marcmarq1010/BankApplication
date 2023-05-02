@@ -55,5 +55,9 @@ public class Messages
     public static final String ACCOUNT_TYPE = "Account type: ";
     public static final String ACCOUNT_NUMBER = "Account number: ";
     public static final String ACCOUNT_BALANCE = "Account balance: ";
+    
+    // Exception messages
+    public static final String ACCOUNT_CLOSED_EXCEPTION = "Account is closed. Can not deposit into a closed account with a zero balance or positive balance";
+    public static final String INSUFFICIENT_BALANCE_EXCEPTION = "There are not enough funds to make a withdrawal.";
 }
 

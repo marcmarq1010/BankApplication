@@ -56,48 +56,69 @@ public class Account
     // Deposits the given amount to the account balance
     public void deposit(double amount, Account fromAccount) throws AccountClosedException
     {
-        // check if the amount is greater than zero and the fromAccount is open
-        if(amount > 0 && fromAccount.isOpen())
+        try 
         {
-            // add the deposited amount to the current balance
-            setBalance(balance + amount);
-            // create a new transaction with details of the fromAccount, deposited amount, and "Deposit" as the transaction type
-            transactions.add(new Transaction(fromAccount, amount, "Deposit"));
-        }
-        else if(!fromAccount.isOpen())
+            // check if the amount is greater than zero and the fromAccount is open
+            if(amount > 0 && fromAccount.isOpen())
+            {
+                // add the deposited amount to the current balance
+                setBalance(balance + amount);
+                // create a new transaction with details of the fromAccount, deposited amount, and "Deposit" as the transaction type
+                transactions.add(new Transaction(fromAccount, amount, "Deposit"));
+            }
+            else if(!fromAccount.isOpen())
+            {
+                // throw an AccountClosedException if the fromAccount is closed
+                throw new AccountClosedException(Messages.ACCOUNT_CLOSED_EXCEPTION);
+            }
+            else
+            {
+                // display a "DEPOSIT_FAILED" message if the amount is not greater than zero
+                System.out.println(Messages.DEPOSIT_FAILED);
+            }
+        } 
+        catch (AccountClosedException e) 
         {
-            // throw an AccountClosedException if the fromAccount is closed
-            throw new AccountClosedException(Messages.ACCOUNT_CLOSED_EXCEPTION);
-        }
-        else
-        {
-            // display a "DEPOSIT_FAILED" message if the amount is not greater than zero
-            System.out.println(Messages.DEPOSIT_FAILED);
+            // Catch and re-throw an AccountClosedException if it occurs
+            throw e;
         }
     }
-
 
     // Withdraws the given amount from the account balance
     public void withdraw(double amount, Account toAccount) throws InsufficientBalanceException, AccountClosedException
     {
-        if(!isOpen)
+        try 
         {
-            // throw an AccountClosedException if the account is closed
-            throw new AccountClosedException(Messages.ACCOUNT_CLOSED_EXCEPTION);
-        }
-        else if(amount > balance)
+            if(!isOpen)
+            {
+                // If the account is closed, throw an AccountClosedException with a message
+                throw new AccountClosedException(Messages.ACCOUNT_CLOSED_EXCEPTION);
+            }
+            else if(amount > balance)
+            {
+                // If there are insufficient funds to make the withdrawal, throw an InsufficientBalanceException with a message
+                throw new InsufficientBalanceException(Messages.INSUFFICIENT_BALANCE_EXCEPTION);
+            }
+            else
+            {
+                // Subtract the amount from the account balance
+                setBalance(balance - amount);
+                // Add the transaction to the list of transactions
+                transactions.add(new Transaction(toAccount, amount, "Withdrawal"));
+            }
+        } 
+        catch (AccountClosedException e) 
         {
-            // throw an InsufficientBalanceException if there are not enough funds to make the withdrawal
-            throw new InsufficientBalanceException(Messages.INSUFFICIENT_BALANCE_EXCEPTION);
-        }
-        else
+            // If an AccountClosedException is caught, re-throw the exception
+            throw e;
+        } 
+        catch (InsufficientBalanceException e) 
         {
-            // Subtract the amount from the account balance
-            setBalance(balance - amount);
-            // Add the transaction to the list of transactions
-            transactions.add(new Transaction(toAccount, amount, "Withdrawal"));
+            // If an InsufficientBalanceException is caught, re-throw the exception
+            throw e;
         }
     }
+
 
     // Sets the current balance of the account
     public void setBalance(double balance) 
