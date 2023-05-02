@@ -5,16 +5,18 @@ import java.util.List;
 
 import Transaction.Transaction;
 import customer.Customer;
+import exceptions.AccountClosedException;
+import exceptions.InsufficientBalanceException;
 import ui.Messages;
 
 public class Account 
 {
-    private Customer customer;						// The customer who owns the account
-    private int accountNumber;						// The unique account number
-    private double balance;							// The current balance of the account   
-    private static int nextAccountNumber = 1000; 	// The next available account number to be assigned
-    private boolean isOpen;							// The status of the account
-    protected ArrayList<Transaction> transactions;	// List of transactions for the account
+    private Customer customer;                      // The customer who owns the account
+    private int accountNumber;                      // The unique account number
+    private double balance;                         // The current balance of the account   
+    private static int nextAccountNumber = 1000;    // The next available account number to be assigned
+    private boolean isOpen;                         // The status of the account
+    protected ArrayList<Transaction> transactions;  // List of transactions for the account
 
     // Constructor to create a new account with the given customer and initial balance
     public Account(Customer customer, double initialBalance) 
@@ -48,41 +50,59 @@ public class Account
     // Deposits the given interest amount to the account balance
     public void depositInterest(double interest) 
     {
-    	setBalance(balance + interest);
+        setBalance(balance + interest);
     }
 
     // Deposits the given amount to the account balance
-    public void deposit(double amount, Account fromAccount) 
+    public void deposit(double amount, Account fromAccount) throws AccountClosedException
     {
         // check if the amount is greater than zero and the fromAccount is open
         if(amount > 0 && fromAccount.isOpen())
         {
             // add the deposited amount to the current balance
-        	setBalance(balance + amount);
-        	// create a new transaction with details of the fromAccount, deposited amount, and "Deposit" as the transaction type
-        	transactions.add(new Transaction(fromAccount, amount, "Deposit"));
+            setBalance(balance + amount);
+            // create a new transaction with details of the fromAccount, deposited amount, and "Deposit" as the transaction type
+            transactions.add(new Transaction(fromAccount, amount, "Deposit"));
+        }
+        else if(!fromAccount.isOpen())
+        {
+            // throw an AccountClosedException if the fromAccount is closed
+            throw new AccountClosedException(Messages.ACCOUNT_CLOSED_EXCEPTION);
         }
         else
         {
-            // display a "DEPOSIT_FAILED" message if the amount is not greater than zero or the fromAccount is not open
-        	System.out.println(Messages.DEPOSIT_FAILED);
+            // display a "DEPOSIT_FAILED" message if the amount is not greater than zero
+            System.out.println(Messages.DEPOSIT_FAILED);
         }
     }
 
 
     // Withdraws the given amount from the account balance
-    public void withdraw(double amount, Account toAccount) 
+    public void withdraw(double amount, Account toAccount) throws InsufficientBalanceException, AccountClosedException
     {
-        // Subtract the amount from the account balance
-        setBalance(balance - amount);
-        // Add the transaction to the list of transactions
-        transactions.add(new Transaction(toAccount, amount, "Withdrawal"));
+        if(!isOpen)
+        {
+            // throw an AccountClosedException if the account is closed
+            throw new AccountClosedException(Messages.ACCOUNT_CLOSED_EXCEPTION);
+        }
+        else if(amount > balance)
+        {
+            // throw an InsufficientBalanceException if there are not enough funds to make the withdrawal
+            throw new InsufficientBalanceException(Messages.INSUFFICIENT_BALANCE_EXCEPTION);
+        }
+        else
+        {
+            // Subtract the amount from the account balance
+            setBalance(balance - amount);
+            // Add the transaction to the list of transactions
+            transactions.add(new Transaction(toAccount, amount, "Withdrawal"));
+        }
     }
 
     // Sets the current balance of the account
     public void setBalance(double balance) 
     {
-    	this.balance = balance;
+        this.balance = balance;
     }
 
     // Returns whether the account is open or not
@@ -96,6 +116,8 @@ public class Account
     {
         isOpen = open;
     }
+
+
 
     // Sets the account to closed
     public void setAccountClose(boolean close) 
