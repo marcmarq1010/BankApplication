@@ -19,25 +19,33 @@ import ui.Messages;
 
 public class Bank 
 {
-	private Map<Integer, Account> accounts; // map to store all the bank accounts
-    private static Map<String, Currency> exchangeRates = new HashMap<>(); // map to store exchange rates for different currencies
+	private Map<Integer, Account> accounts; 									// Stores all the bank accounts
+    private static Map<String, Currency> exchangeRates = new HashMap<>(); 		// Stores exchange rates for different currencies
 
-    // constructor to initialize the map of accounts
+    // Constructor to initialize the map of accounts and read currency file
     public Bank() 
     {
         accounts = new HashMap<Integer, Account>();
         readCurrencyFile();
     }
-
+    
+    // Method to open a checking account
     public CheckingAccount openCheckingAccount(Customer customer, double overdraftLimit, double initialDeposit, String currencyCode) 
     {
-        // Check if exchange rates have been loaded successfully
+        // Checks if exchange rates have been loaded successfully
         if (exchangeRates != null) 
         {
+        	// Checks if the currency code is valid
         	if(exchangeRates.containsKey(currencyCode.toUpperCase())) 
         	{
-        		Currency exchangeRate = exchangeRates.get(currencyCode.toUpperCase());
-                initialDeposit = initialDeposit * exchangeRate.getExchangeRate();
+        		// Creates a new checking account object with the given parameters and currency code
+                CheckingAccount checkingAccount = new CheckingAccount(customer, overdraftLimit, initialDeposit, currencyCode);
+                
+                // Adds the checking account to the map of accounts with its account number as the key
+                accounts.put(checkingAccount.getAccountNumber(), checkingAccount);
+                
+                // Returns the new checking account object
+                return checkingAccount;
         	}
         	else
         	{
@@ -45,7 +53,9 @@ public class Bank
                 System.out.println("Error: Currency not available. Please enter a different currency code.");
                 Scanner scanner = new Scanner(System.in);
                 currencyCode = scanner.nextLine();
-                return openCheckingAccount(customer, overdraftLimit, initialDeposit, currencyCode); // recursive call to retry opening account
+                
+                // Recursive call to retry opening account
+                return openCheckingAccount(customer, overdraftLimit, initialDeposit, currencyCode); 
         	}
          
         } 
@@ -53,25 +63,35 @@ public class Bank
         {
             // Exchange rates not available, assume USD as currency
             currencyCode = Messages.CURRENCY_DEFAULT;
+            
+            // Creates a new checking account object with the given parameters and currency code
+            CheckingAccount checkingAccount = new CheckingAccount(customer, overdraftLimit, initialDeposit, currencyCode);
+            
+            // Adds the checking account to the map of accounts with its account number as the key
+            accounts.put(checkingAccount.getAccountNumber(), checkingAccount);
+            
+            // Returns the new checking account object
+            return checkingAccount;
         }
-
-        // create a new checking account object with the given parameters and currency code
-        CheckingAccount checkingAccount = new CheckingAccount(customer, overdraftLimit, initialDeposit, currencyCode);
-        // add the checking account to the map of accounts with its account number as the key
-        accounts.put(checkingAccount.getAccountNumber(), checkingAccount);
-        // return the new checking account object
-        return checkingAccount;
     }
 
+    // Method to open a savings account
     public SavingAccount openSavingsAccount(Customer customer, double initialDeposit, String currencyCode)
     {
-    	  // Check if exchange rates have been loaded successfully
+    	// Checks if exchange rates have been loaded successfully
         if (exchangeRates != null) 
         {
+        	// Checks if the currency code is valid
         	if(exchangeRates.containsKey(currencyCode.toUpperCase())) 
         	{
-        		Currency exchangeRate = exchangeRates.get(currencyCode.toUpperCase());
-                initialDeposit = initialDeposit * exchangeRate.getExchangeRate();
+        		// Creates a new savings account object with the given parameters and currency code
+                SavingAccount savingsAccount = new SavingAccount(customer, initialDeposit, currencyCode);
+                
+                // Adds the savings account to the map of accounts with its account number as the key
+                accounts.put(savingsAccount.getAccountNumber(), savingsAccount);
+                
+                // Returns the new savings account object
+                return savingsAccount;
         	}
         	else
         	{
@@ -79,94 +99,137 @@ public class Bank
                 System.out.println("Error: Currency not available. Please enter a different currency code.");
                 Scanner scanner = new Scanner(System.in);
                 currencyCode = scanner.nextLine();
-                return openSavingsAccount(customer, initialDeposit, currencyCode); // recursive call to retry opening account
+                
+                // Recursive call to retry opening account
+                return openSavingsAccount(customer, initialDeposit, currencyCode); 
         	}
         }
         else 
         {
             // Exchange rates not available, assume USD as currency
             currencyCode = Messages.CURRENCY_DEFAULT;
+            
+            // Creates a new savings account object with the given parameters and currency code
+            SavingAccount savingsAccount = new SavingAccount(customer, initialDeposit, currencyCode);
+            
+            // Adds the savings account to the map of accounts with its account number as the key
+            accounts.put(savingsAccount.getAccountNumber(), savingsAccount);
+            
+            // Returns the new savings account object
+            return savingsAccount;
         }
-
-        // create a new savings account object with the given parameters and currency code
-        SavingAccount savingsAccount = new SavingAccount(customer, initialDeposit, currencyCode);
-        // add the savings account to the map of accounts with its account number as the key
-        accounts.put(savingsAccount.getAccountNumber(), savingsAccount);
-        // return the new savings account object
-        return savingsAccount;
     }
-
     
-    // method to read a file and store exchange rates
+    // Method to read a file and store exchange rates
     public void readCurrencyFile()
     {
+    	// Creates a new CurrencyExchangeReader object
 	    CurrencyExchangeReader reader = new CurrencyExchangeReader();
 
 			try 
 			{
+				// Calls the read method of the CurrencyExchangeReader object, passing in the filename of the exchange rate file
+				// The read method returns a HashMap containing the exchange rates
 				exchangeRates = reader.read("exchange-rate.csv");
 			}
 			catch (IOException e) 
 			{
-				// handle the exception here, e.g. print an error message
+				// Handles the exception here, e.g. print an error message
 	            System.out.println(e.getMessage());
 			}
 
     }
     
+    // This method converts a balance from a specified currency to a default currency
     public double getCurrency(String currency, double balance, String USD)
     {
+    	// Checks if the specified currency is the same as the default currency
     	if (currency.toUpperCase().equals(Messages.CURRENCY_DEFAULT)) 
     	{
+    		// If true, returns the balance without conversion
     		return balance;
     	}
     	else
     	{ 
+    		// If false, Creates an instance of the Currency class and gets the information for the specified currency from the exchangeRates HashMap
     		Currency exchangeRate = exchangeRates.get(currency.toUpperCase());
         
+    		// Calculates the converted amount by multiplying the balance by the exchange rate of the currency 
     		double convertedAmount = balance * exchangeRate.getExchangeRate();
     		
+    		// Returns the converted amount
     		return convertedAmount;
     	}
     }
     
+    // This method converts an amount of money from one currency to another
     public void convertCurrency(String selling, double amount, String buying) 
     {
+    	// Initializes a variable to hold the converted amount
         double convertedAmount = 0;
         
+        // Checks if the selling currency is the same as the default currency
         if (selling.toUpperCase().equals(Messages.CURRENCY_DEFAULT)) 
         {
+            // If true, checks if the buying currency is in the exchangeRates HashMap
             if (!exchangeRates.containsKey(buying.toUpperCase())) 
             {
+                // If false, print an error message and return from the method
                 System.out.println(Messages.CURRENCY_NOT_FOUND + buying.toUpperCase());
                 return;
             }
-            Currency exchangeRate = exchangeRates.get(buying.toUpperCase());
-            
-            convertedAmount = amount / exchangeRate.getExchangeRate();
+            else
+            {
+                // If the buying currency is in the exchangeRates HashMap, gets the exchange rate
+                Currency exchangeRate = exchangeRates.get(buying.toUpperCase());
+                
+                // Calculates the converted amount
+                convertedAmount = amount / exchangeRate.getExchangeRate();
+                
+                // Print the exchange rate and converted amount
+                System.out.println(Messages.CURRENCY_RATE_IS + exchangeRates.get(buying + Messages.CURRENCY_AMOUNT_GIVEN + buying + convertedAmount));
+            }
         } 
+        // If the buying currency is the same as the default currency, follow the same logic as above but in reverse
         else if (buying.toUpperCase().equals(Messages.CURRENCY_DEFAULT)) 
         {
+        	// If true, checks if the selling currency is in the exchangeRates HashMap
             if (!exchangeRates.containsKey(selling.toUpperCase())) 
             {
+            	// If false, print an error message and return from the method
                 System.out.println(Messages.CURRENCY_NOT_FOUND + buying.toUpperCase());
                 return;
             }
-            Currency exchangeRate = exchangeRates.get(selling.toUpperCase());
-            convertedAmount = amount * exchangeRate.getExchangeRate();
+            else
+            {
+            	 // If the selling currency is in the exchangeRates HashMap, gets the exchange rate
+                Currency exchangeRate = exchangeRates.get(selling.toUpperCase());
+                
+                // Calculates the converted amount
+                convertedAmount = amount * exchangeRate.getExchangeRate();
+                
+                // Print the exchange rate and converted amount
+                System.out.println(Messages.CURRENCY_RATE_IS + exchangeRates.get(buying + Messages.CURRENCY_AMOUNT_GIVEN + buying + convertedAmount));
+            }
         } 
+        // If neither currency is the default currency, check that both currencies are in the exchangeRates HashMap
         else 
         {
+            // Checks that both currencies are in exchangeRates HashMap
             if (!exchangeRates.containsKey(selling) || !exchangeRates.containsKey(buying)) 
             {
+                // Prints error message and return
                 System.out.println(Messages.CURRENCY_NOT_FOUND + selling + Messages.CURRENCY_NOT_FOUND + buying);
-                // return;
+                return;
             }
-            Currency exchangeRate1 = exchangeRates.get(selling);
-            Currency exchangeRate2 = exchangeRates.get(buying);
-            convertedAmount = amount * exchangeRate1.getExchangeRate() / exchangeRate2.getExchangeRate();
+            // Checks that at least one of the currencies is the default currency
+            else if((!buying.toUpperCase().equals(Messages.CURRENCY_DEFAULT) && !selling.toUpperCase().equals(Messages.CURRENCY_DEFAULT)))
+            {
+                // Prints error message and return
+            	System.out.println(Messages.CURRENCIES_MUST_BE_USD);
+                return;
+            }
         }
-        System.out.println(Messages.CURRENCY_RATE_IS + exchangeRates.get(buying + Messages.CURRENCY_AMOUNT_GIVEN + buying + convertedAmount));
     }
     
     // method to get all accounts in the bank

@@ -7,44 +7,47 @@ import ui.Messages;
 
 public class CheckingAccount extends Account 
 {
-    private double overdraftLimit;				 // field to hold overdraft limit
-    private String accountType = Messages.ACCOUNT_TYPE_CHECKING;	 // field to hold account type
-    private double convertedBalance;
+    private double overdraftLimit;				 					 // The overdraft limit
+    private String accountType = Messages.ACCOUNT_TYPE_CHECKING;	 // The account type
+    private double convertedBalance;								 // The convert balance from current currency to default currency
     
-    // constructor that takes customer, initial balance, and overdraft limit
+    // Constructor that takes customer, initial balance, and overdraft limit
     public CheckingAccount(Customer customer, double overdraftLimit, double initialBalance, String currencyCode) 
     {
-    	// call the constructor of the Account superclass
+    	// Calls the constructor of the Account superclass to initialize customer and balance and currency code
         super(customer, initialBalance, currencyCode);	
-        // set the overdraft limit for this checking account
+        
+        // Sets the overdraft limit for this checking account
         this.overdraftLimit = overdraftLimit;	
     }
 
-    // getter method for overdraft limit
+    // Getter method for overdraft limit
     public double getOverdraftLimit() 
     {
         return overdraftLimit;
     }
 
-    // setter method for overdraft limit
+    // Setter method for overdraft limit
     public void setOverdraftLimit(double overdraftLimit) 
     {
         this.overdraftLimit = overdraftLimit;
     }
 	
-	// override the withdraw method from the Account superclass
+	// Overrides the withdraw method from the Account superclass
     @Override
     public void withdraw(double amount, Account ac) 
     {
-        // check if the withdrawal amount exceeds the account balance plus the overdraft limit
+        // Checks if the withdrawal amount exceeds the account balance plus the overdraft limit
         if (amount > getBalance() + overdraftLimit || amount <= 0) 
         {
+        	// Displays a "WITHDRAWAL_FAILED" message if the amount is is greater than the balance plus the overdraft limit
             System.out.println(Messages.WITHDRAWAL_FAILED + getBalance());
         } 
         else 
         {
-            // withdraw the amount from the account balance
+            // Withdraws the amount from the account balance
             setBalance(getBalance() - amount);
+            //Add the transaction to the list of transactions
             transactions.add(new Transaction(ac, amount, Messages.IS_WITHDRAWAL));
         }
     }

@@ -74,7 +74,7 @@ public class Account
                 // Adds the deposited amount to the current balance
                 setBalance(balance + amount);
                 
-                // Creates a new transaction with details of the account, deposited amount, and "Deposit" as the transaction type
+                // Add the transaction to the list of transactions
                 transactions.add(new Transaction(account, amount, Messages.IS_DEPOSIT));
             }
             else if(!account.isOpen())
