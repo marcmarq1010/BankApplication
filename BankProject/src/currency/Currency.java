@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Currency 
 {
-    // Declare private instance variables for currency code, name and exchange rate
+    // Declares private instance variables for currency code, name and exchange rate
     private String code;
     private String name;
     private double exchangeRate;
