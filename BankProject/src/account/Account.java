@@ -22,13 +22,14 @@ public class Account
     protected ArrayList<Transaction> transactions;  // List of transactions for the account
 
     // Constructor to create a new account with the given customer and initial balance
-    public Account(Customer customer, double initialBalance, String Currency) 
+    public Account(Customer customer, double initialBalance, String currency) 
     {
         this.customer = customer;
         this.accountNumber = nextAccountNumber;
         nextAccountNumber++;
         this.setBalance(initialBalance);
         this.isOpen = true;
+        this.currency = currency;
         transactions = new ArrayList<Transaction>();
     }
 
@@ -183,7 +184,7 @@ public class Account
 	public double getConvertedBalance()
 	{
 		Bank bank = new Bank();
-		return bank.getCurrency(currency, getBalance(),  Messages.CURRENCY_DEFAULT);
+		return bank.getCurrency(this.currency, getBalance(),  Messages.CURRENCY_DEFAULT);
 	}
 
 	// Returns a list of all transactions for the account
