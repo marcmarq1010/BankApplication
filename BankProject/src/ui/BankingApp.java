@@ -166,7 +166,22 @@ public class BankingApp
 
     private void showAccountInformation()
     {
-    	System.out.println("FIXME: Add functionality!");
+    	  try 
+          {
+          	  // Find the account by its account number
+              Account ac = bank.findAccount(IU.getInt(Messages.ENTER_ACCOUNT_NUMBER));
+            
+              System.out.println(Messages.ACCOUNT_NUMBER + ac.getAccountNumber());
+              System.out.println(Messages.ACCOUNT_INFO_NAME + ac.getCustomer().getFirstName() + " " +ac.getCustomer().getLastName());
+              System.out.println(Messages.ACCOUNT_INFO_CURRENCY + ac.getCurrencyCode());
+              System.out.println(Messages.ACCOUNT_INFO_CURRENCY_BALANCE + ac.getBalance());
+              System.out.println(Messages.ACCOUNT_INFO_CURRENCY_BALANCE_USD + ac.getConvertedBalance());
+          } 
+          catch (NoSuchAccountException e) 
+          {
+              // handle the exception here, e.g. print an error message
+              System.out.println(e.getMessage());
+          } 
     }
     
     // Method to deposit funds into an account

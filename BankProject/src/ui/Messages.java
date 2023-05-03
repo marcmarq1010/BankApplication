@@ -28,7 +28,7 @@ public class Messages
     public static final String ENTER_ACCOUNT_NUMBER = "Enter account number: ";
     public static final String ENTER_DEPOSIT_AMOUNT =  "Enter the amount to deposit: ";
     public static final String ENTER_WITHDRAW_AMOUNT =  "Enter the withdrawal amount: ";
-    public static final String ENTER_ACCOUNT_CURRENCY = "Account Currency:";
+    public static final String ENTER_ACCOUNT_CURRENCY = "Enter Account Currency:";
  
     
     // Menu commands
@@ -56,6 +56,12 @@ public class Messages
     public static final String ENTER_SSN = "Enter social security number: ";
     public static final String ENTER_OVERDRAFT_LIMIT =  "Enter overdraft limit: ";
     public static final String ENTER_INITAL_BALANCE = "Enter initial balance: ";
+    
+    //Option to show account information
+    public static final String ACCOUNT_INFO_NAME = "Name: ";
+    public static final String ACCOUNT_INFO_CURRENCY = "Currency: ";
+    public static final String ACCOUNT_INFO_CURRENCY_BALANCE = "Currency Balance: ";
+    public static final String ACCOUNT_INFO_CURRENCY_BALANCE_USD = "USD Balance: ";
     
     // Account information messages
     public static final String ACCOUNT_DETAILS = "Account details:";
