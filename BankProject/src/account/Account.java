@@ -18,7 +18,7 @@ public class Account
     private double balance;                         // The current balance of the account   
     private static int nextAccountNumber = 1000;    // The next available account number to be assigned
     private boolean isOpen;                         // The status of the account
-    private String currency;
+    private String currency;						// The currency that the account is using
     protected ArrayList<Transaction> transactions;  // List of transactions for the account
 
     // Constructor to create a new account with the given customer and initial balance
@@ -51,6 +51,12 @@ public class Account
         return balance;
     }
 
+    // Sets the current balance of the account
+    public void setBalance(double balance) 
+    {
+        this.balance = balance;
+    }
+    
     // Deposits the given interest amount to the account balance
     public void depositInterest(double interest) 
     {
@@ -58,32 +64,33 @@ public class Account
     }
 
     // Deposits the given amount to the account balance
-    public void deposit(double amount, Account fromAccount) throws AccountClosedException
+    public void deposit(double amount, Account account) throws AccountClosedException
     {
         try 
         {
-            // check if the amount is greater than zero and the fromAccount is open
-            if(amount > 0 && fromAccount.isOpen())
+            // Checks if the amount is greater than zero and the account is open
+            if(amount > 0 && account.isOpen())
             {
-                // add the deposited amount to the current balance
+                // Adds the deposited amount to the current balance
                 setBalance(balance + amount);
-                // create a new transaction with details of the fromAccount, deposited amount, and "Deposit" as the transaction type
-                transactions.add(new Transaction(fromAccount, amount, Messages.IS_DEPOSIT));
+                
+                // Creates a new transaction with details of the account, deposited amount, and "Deposit" as the transaction type
+                transactions.add(new Transaction(account, amount, Messages.IS_DEPOSIT));
             }
-            else if(!fromAccount.isOpen())
+            else if(!account.isOpen())
             {
-                // throw an AccountClosedException if the fromAccount is closed
+                // Throws an AccountClosedException if the account is closed
                 throw new AccountClosedException(Messages.ACCOUNT_CLOSED_EXCEPTION);
             }
             else
             {
-                // display a "DEPOSIT_FAILED" message if the amount is not greater than zero
+                // Displays a "DEPOSIT_FAILED" message if the amount is not greater than zero
                 System.out.println(Messages.DEPOSIT_FAILED);
             }
         } 
         catch (AccountClosedException e) 
         {
-            // Catch and re-throw an AccountClosedException if it occurs
+            // Catches and re-throws an AccountClosedException if it occurs
             throw e;
         }
     }
@@ -107,6 +114,7 @@ public class Account
             {
                 // Subtract the amount from the account balance
                 setBalance(balance - amount);
+                
                 // Add the transaction to the list of transactions
                 transactions.add(new Transaction(toAccount, amount, Messages.IS_WITHDRAWAL));
             }
@@ -123,11 +131,29 @@ public class Account
         }
     }
 
-
-    // Sets the current balance of the account
-    public void setBalance(double balance) 
+    // Sets the account to open
+    public void setAccountOpen(boolean open) 
     {
-        this.balance = balance;
+        isOpen = open;
+    }
+
+	// This method sets the account status to closed
+    public void setAccountClose(boolean close)
+    {
+		 // Check if the account is already closed
+		 if(isOpen == false)
+		 {
+			 // Print a message indicating that the account is already closed
+			 System.out.println(Messages.ACCOUNT_CLOSED_ALREADY);
+		 }
+		 // If the account is not already closed
+		 else 
+		 {
+			 // Set the account status to closed
+			 isOpen = close;
+			 // Print a message indicating that the account is now closed, along with its balance
+			 System.out.println(Messages.ACCOUNT_CLOSED + getBalance());
+		 }
     }
 
     // Returns whether the account is open or not
@@ -135,56 +161,44 @@ public class Account
     {
         return isOpen;
     }
-
-    // Sets the account to open
-    public void setAccountOpen(boolean open) 
-    {
-        isOpen = open;
-    }
-
-
-
-    // Sets the account to closed
-    public void setAccountClose(boolean close) 
-    {
-    	if(isOpen == false)
-    	{
-    		System.out.println(Messages.ACCOUNT_CLOSED_ALREADY);
-    	}
-    	else
-    	{
-        	isOpen = close;
-        	System.out.println(Messages.ACCOUNT_CLOSED + getBalance());
-    	}
-    }
-
-    // Returns the status of the account
+    
+    // Returns the current status of the account
     public String getStatus()
     {
-    	if(isOpen)
-    	{
-    		return Messages.ACCOUNT_OPEN;
-    	}
-    	else
-    	{
-    		return Messages.ACCOUNT_CLOSE;
-    	}
+        // Check if the account is currently open
+        if (isOpen) 
+        {
+            // If it is, return a message indicating that the account is open
+            return Messages.ACCOUNT_OPEN;
+        }
+        else 
+        {
+            // If it is not, return a message indicating that the account is closed
+            return Messages.ACCOUNT_CLOSE;
+        }
     }
 
+    //Return the currency being used by the account
     public String getCurrencyCode() 
     {
 		return currency;
 	}
 
+    //Sets the currency to be used by the account
 	public void setCurrency(String currency) 
 	{
 		this.currency = currency;
 	}
 	
-	public double getConvertedBalance()
+	//Returns the account balance in the default currency
+	public double getConvertedBalance() 
 	{
+		// Create a new Bank object
 		Bank bank = new Bank();
-		return bank.getCurrency(this.currency, getBalance(),  Messages.CURRENCY_DEFAULT);
+		
+		// Call the getCurrency method of the Bank object, passing in the account currency, balance, and a default currency
+		// The getCurrency method returns the account balance converted to the default currency
+		return bank.getCurrency(this.currency, getBalance(), Messages.CURRENCY_DEFAULT);
 	}
 
 	// Returns a list of all transactions for the account
