@@ -28,6 +28,8 @@ public class Messages
     public static final String ENTER_ACCOUNT_NUMBER = "Enter account number: ";
     public static final String ENTER_DEPOSIT_AMOUNT =  "Enter the amount to deposit: ";
     public static final String ENTER_WITHDRAW_AMOUNT =  "Enter the withdrawal amount: ";
+    public static final String ENTER_ACCOUNT_CURRENCY = "Account Currency:";
+ 
     
     // Menu commands
     public static final String ENTER_PROGRAM_EXIT = "Exiting program...";
@@ -58,6 +60,8 @@ public class Messages
     // Account information messages
     public static final String ACCOUNT_DETAILS = "Account details:";
     public static final String ACCOUNT_TYPE = "Account type: ";
+    public static final String ACCOUNT_TYPE_CHECKING = "Checking";
+    public static final String ACCOUNT_TYPE_SAVING = "Saving";
     public static final String ACCOUNT_NUMBER = "Account number: ";
     public static final String ACCOUNT_BALANCE = "Account balance: ";
     public static final String ACCOUNT_OPEN = "Open";
@@ -81,5 +85,8 @@ public class Messages
     public static final String CURRENCY_BUYING = "The currency you are buying : ";
     public static final String CURRENCY_RATE_IS = "The exchange rate is ";
     public static final String CURRENCY_AMOUNT_GIVEN = "and you will get " ;
+    public static final String CURRENCY_NOT_FOUND = "Exchange rate not found for ";
+    public static final String CURRENCY_DEFAULT = "USD";
+    public static final String CURRENCY_NOT_AVAILABLE = "Error: Currency not available. Please enter a different currency code.";
 }
 

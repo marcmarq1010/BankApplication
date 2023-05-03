@@ -1,17 +1,19 @@
 package account;
 
 import customer.Customer;
+import ui.Messages;
 
 public class SavingAccount extends Account 
 {
     private final double INTEREST_RATE = 0.004;	 // constant interest rate for the account
-    private String accountType = "Saving";		// field to hold account type
+    private String accountType = Messages.ACCOUNT_TYPE_SAVING;		 // field to hold account type
+
 
     // constructor that takes a customer and initial balance
-    public SavingAccount(Customer customer, double initialBalance) 
+    public SavingAccount(Customer customer, double initialBalance, String currencyCode) 
     {
         // call the constructor of the Account class to initialize customer and balance
-        super(customer, initialBalance);
+        super(customer, initialBalance, currencyCode);
     }
 
     // method to add interest to the account balance
@@ -27,6 +29,6 @@ public class SavingAccount extends Account
     @Override
     public String toString() 
     {
-        return getAccountNumber() + "(" + accountType + ") : " + getCustomer().getFirstName() + " : " + getCustomer().getLastName() + " : " + getCustomer().getSsn() + " : " + getBalance() + " : " + getStatus();
+        return getAccountNumber() + "(" + accountType + ") : " + getCustomer().getFirstName() + " : " + getCustomer().getLastName() + " : " + getCustomer().getSsn() + " : " + getCurrencyCode() + " : " + getBalance() + " : " + Messages.CURRENCY_DEFAULT + " : " + getConvertedBalance() + " : " + getStatus();
     }
 }

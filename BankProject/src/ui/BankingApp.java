@@ -12,6 +12,7 @@ import account.Account;
 import account.CheckingAccount;
 import account.SavingAccount;
 import bank.Bank;
+import currency.Currency;
 import customer.Customer;
 import exceptions.AccountClosedException;
 import exceptions.InsufficientBalanceException;
@@ -108,7 +109,7 @@ public class BankingApp
         Customer c = new Customer(IU.getString(Messages.ENTER_FIRST_NAME), IU.getString(Messages.ENTER_LAST_NAME), IU.getString(Messages.ENTER_SSN));
         
         // Open a checking account for the customer with specified overdraft limit and initial balance
-        CheckingAccount ca = bank.openCheckingAccount(c, IU.getDouble(Messages.ENTER_OVERDRAFT_LIMIT), IU.getDouble(Messages.ENTER_INITAL_BALANCE));
+        CheckingAccount ca = bank.openCheckingAccount(c, IU.getDouble(Messages.ENTER_OVERDRAFT_LIMIT), IU.getDouble(Messages.ENTER_INITAL_BALANCE), IU.getString(Messages.ENTER_ACCOUNT_CURRENCY));
         
         // Print the message indicating the account number of the newly created checking account
         System.out.println(Messages.ACCOUNT_CREATED + ca.getAccountNumber());
@@ -121,7 +122,7 @@ public class BankingApp
         Customer c = new Customer(IU.getString(Messages.ENTER_FIRST_NAME), IU.getString(Messages.ENTER_LAST_NAME), IU.getString(Messages.ENTER_SSN));
         
         // Open a savings account for the customer with specified initial balance
-        SavingAccount sa = bank.openSavingsAccount(c, IU.getDouble(Messages.ENTER_INITAL_BALANCE));
+        SavingAccount sa = bank.openSavingsAccount(c, IU.getDouble(Messages.ENTER_INITAL_BALANCE), IU.getString(Messages.ENTER_ACCOUNT_CURRENCY));
         
         // Print the message indicating the account number of the newly created savings account
         System.out.println(Messages.ACCOUNT_CREATED + sa.getAccountNumber());
@@ -281,8 +282,6 @@ public class BankingApp
     public void currencyConversion()
     {
     	bank.convertCurrency(IU.getString(Messages.CURRENCY_SELLING), IU.getDouble(Messages.CURRENCY_AMOUNT_TO_BE_SOLD), IU.getString(Messages.CURRENCY_BUYING));
-    	
-    	//System.out.println(Messages.CURRENCY_RATE_IS + getRate + Messages.CURRENCY_AMOUNT_GIVEN + rateCode + amount);
     }
 
 }   

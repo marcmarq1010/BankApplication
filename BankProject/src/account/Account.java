@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Transaction.Transaction;
+import bank.Bank;
+import currency.Currency;
 import customer.Customer;
 import exceptions.AccountClosedException;
 import exceptions.InsufficientBalanceException;
@@ -16,10 +18,11 @@ public class Account
     private double balance;                         // The current balance of the account   
     private static int nextAccountNumber = 1000;    // The next available account number to be assigned
     private boolean isOpen;                         // The status of the account
+    private String currency;
     protected ArrayList<Transaction> transactions;  // List of transactions for the account
 
     // Constructor to create a new account with the given customer and initial balance
-    public Account(Customer customer, double initialBalance) 
+    public Account(Customer customer, double initialBalance, String Currency) 
     {
         this.customer = customer;
         this.accountNumber = nextAccountNumber;
@@ -167,7 +170,23 @@ public class Account
     	}
     }
 
-    // Returns a list of all transactions for the account
+    public String getCurrencyCode() 
+    {
+		return currency;
+	}
+
+	public void setCurrency(String currency) 
+	{
+		this.currency = currency;
+	}
+	
+	public double getConvertedBalance()
+	{
+		Bank bank = new Bank();
+		return bank.getCurrency(currency, getBalance(),  Messages.CURRENCY_DEFAULT);
+	}
+
+	// Returns a list of all transactions for the account
     public List<Transaction> getAllTransactions()
     {
     	return transactions;

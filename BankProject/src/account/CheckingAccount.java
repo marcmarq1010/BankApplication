@@ -1,19 +1,21 @@
 package account;
 
 import Transaction.Transaction;
+import currency.Currency;
 import customer.Customer;
 import ui.Messages;
 
 public class CheckingAccount extends Account 
 {
     private double overdraftLimit;				 // field to hold overdraft limit
-    private String accountType = "Checking";	 // field to hold account type
-
+    private String accountType = Messages.ACCOUNT_TYPE_CHECKING;	 // field to hold account type
+    private double convertedBalance;
+    
     // constructor that takes customer, initial balance, and overdraft limit
-    public CheckingAccount(Customer customer, double overdraftLimit, double initialBalance) 
+    public CheckingAccount(Customer customer, double overdraftLimit, double initialBalance, String currencyCode) 
     {
     	// call the constructor of the Account superclass
-        super(customer, initialBalance);	
+        super(customer, initialBalance, currencyCode);	
         // set the overdraft limit for this checking account
         this.overdraftLimit = overdraftLimit;	
     }
@@ -29,8 +31,8 @@ public class CheckingAccount extends Account
     {
         this.overdraftLimit = overdraftLimit;
     }
-
-    // override the withdraw method from the Account superclass
+	
+	// override the withdraw method from the Account superclass
     @Override
     public void withdraw(double amount, Account ac) 
     {
@@ -43,7 +45,7 @@ public class CheckingAccount extends Account
         {
             // withdraw the amount from the account balance
             setBalance(getBalance() - amount);
-            transactions.add(new Transaction(ac, amount, "Withdrawal"));
+            transactions.add(new Transaction(ac, amount, Messages.IS_WITHDRAWAL));
         }
     }
     
@@ -51,6 +53,6 @@ public class CheckingAccount extends Account
     @Override
     public String toString() 
     {
-        return getAccountNumber() + "(" + accountType + ") : " + getCustomer().getFirstName() + " : " + getCustomer().getLastName() + " : " + getCustomer().getSsn() + " : " + getBalance() + " : " + getStatus();
+        return getAccountNumber() + "(" + accountType + ") : " + getCustomer().getFirstName() + " : " + getCustomer().getLastName() + " : " + getCustomer().getSsn() + " : " + getCurrencyCode() + " : " + getBalance() + " : "  + Messages.CURRENCY_DEFAULT + " : " + getConvertedBalance() + " : " + getStatus();
     }
 }
