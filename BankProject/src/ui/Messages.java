@@ -20,11 +20,12 @@ public class Messages
 	public static final String MENU_OPTION_8 = "8.  Close an account";
 	public static final String MENU_OPTION_9 = "9.  Save Transactions";
 	public static final String MENU_OPTION_10 = "10. Currency Conversion";
-	public static final String MENU_OPTION_11 = "11. Exit";
+	public static final String MENU_OPTION_11 = "11. Save information";
+	public static final String MENU_OPTION_12 = "12. Exit";
 	
 	// Input prompts
     public static final String ENTER_MENU_CHOICE = "Enter your choice: ";
-    public static final String MENU_INVALID_CHOICE =  "Invalid choice. Please enter a number between 1 and 8.";
+    public static final String MENU_INVALID_CHOICE =  "Invalid choice. Please enter a number between 1 and 12.";
     public static final String ENTER_ACCOUNT_NUMBER = "Enter account number: ";
     public static final String ENTER_DEPOSIT_AMOUNT =  "Enter the amount to deposit: ";
     public static final String ENTER_WITHDRAW_AMOUNT =  "Enter the withdrawal amount: ";

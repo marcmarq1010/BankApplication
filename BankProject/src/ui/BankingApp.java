@@ -75,13 +75,16 @@ public class BankingApp
                     currencyConversion(); // Calls method to convert currency
                     break;
                 case 11:
-                    // Displays message that the program is exiting
+                						 // Calls method to save data to a file
                     break;
+                case 12:
+                	System.out.println(Messages.ENTER_PROGRAM_EXIT); // Displays message that the program is exiting
+                	break;
                 default:
                    System.out.println(Messages.MENU_INVALID_CHOICE); // Displays message for an invalid choice
             }
         } 
-        while (choice != 11); // Continues the loop until user chooses to exit
+        while (choice != 12); // Continues the loop until user chooses to exit
     }
     
     private void displayMenu() 
@@ -98,7 +101,8 @@ public class BankingApp
         System.out.println(Messages.MENU_OPTION_8);  // Displays option to close a specific account
         System.out.println(Messages.MENU_OPTION_9);  // Displays option to save the transactions to a txt file
         System.out.println(Messages.MENU_OPTION_10); // Displays option to convert currency
-        System.out.println(Messages.MENU_OPTION_11); // Displays option to exit the program
+        System.out.println(Messages.MENU_OPTION_11); // Displays option to save data to a file
+        System.out.println(Messages.MENU_OPTION_12); // Displays option to exit the program
         System.out.println("");
         System.out.println(Messages.ENTER_MENU_CHOICE); // Prompts user to enter their choice
     }
@@ -301,9 +305,16 @@ public class BankingApp
         }
     }
     
+    // Method to convert currency
     public void currencyConversion()
     {
     	bank.convertCurrency(IU.getString(Messages.CURRENCY_SELLING), IU.getDouble(Messages.CURRENCY_AMOUNT_TO_BE_SOLD), IU.getString(Messages.CURRENCY_BUYING));
+    }
+    
+    // Method to save all data to a file
+    public void saveBankDataToFile()
+    {
+    	
     }
 
 }   
