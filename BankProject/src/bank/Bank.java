@@ -50,7 +50,7 @@ public class Bank
         	else
         	{
         		// Exchange rates not available, print error message and ask for currency to be re-entered
-                System.out.println("Error: Currency not available. Please enter a different currency code.");
+                System.out.println(Messages.CURRENCY_NOT_AVAILABLE);
                 Scanner scanner = new Scanner(System.in);
                 currencyCode = scanner.nextLine();
                 
@@ -96,7 +96,7 @@ public class Bank
         	else
         	{
         		// Exchange rates not available, print error message and ask for currency to be re-entered
-                System.out.println("Error: Currency not available. Please enter a different currency code.");
+                System.out.println(Messages.CURRENCY_NOT_AVAILABLE);
                 Scanner scanner = new Scanner(System.in);
                 currencyCode = scanner.nextLine();
                 
