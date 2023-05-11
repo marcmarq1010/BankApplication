@@ -26,7 +26,10 @@ public class Bank
     public Bank() 
     {
         accounts = new HashMap<Integer, Account>();
-        readCurrencyFile();
+        //config method will be called to read config file and return boolean values then pass boolean arguments to the readCurrency method
+        //The config method will have a branching statement to decide whether to access currency or not
+        // and where to access it from, URL or from the local file
+        readCurrency();
     }
     
     // Method to open a checking account
@@ -121,7 +124,7 @@ public class Bank
     }
     
     // Method to read a file and store exchange rates
-    public void readCurrencyFile()
+    public void readCurrency()
     {
     	// Creates a new CurrencyExchangeReader object
 	    CurrencyExchangeReader reader = new CurrencyExchangeReader();
