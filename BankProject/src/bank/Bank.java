@@ -11,6 +11,8 @@ import Transaction.Transaction;
 import account.Account;
 import account.CheckingAccount;
 import account.SavingAccount;
+import config.Config;
+import config.ConfigurationReader;
 import currency.Currency;
 import currency.CurrencyExchangeReader;
 import customer.Customer;
@@ -26,10 +28,7 @@ public class Bank
     public Bank() 
     {
         accounts = new HashMap<Integer, Account>();
-        //config method will be called to read config file and return boolean values then pass boolean arguments to the readCurrency method
-        //The config method will have a branching statement to decide whether to access currency or not
-        // and where to access it from, URL or from the local file
-        readCurrency();
+        readFiles();
     }
     
     // Method to open a checking account
@@ -123,25 +122,26 @@ public class Bank
         }
     }
     
-    // Method to read a file and store exchange rates
-    public void readCurrency()
+    public void readFiles()
     {
-    	// Creates a new CurrencyExchangeReader object
-	    CurrencyExchangeReader reader = new CurrencyExchangeReader();
+    	// Creates a new ConfigurationReader object
+    	ConfigurationReader confReader = new ConfigurationReader();
 
-			try 
-			{
-				// Calls the read method of the CurrencyExchangeReader object, passing in the filename of the exchange rate file
-				// The read method returns a HashMap containing the exchange rates
-				exchangeRates = reader.read("exchange-rate.csv");
-			}
-			catch (IOException e) 
-			{
-				// Handles the exception here, e.g. print an error message
-	            System.out.println(e.getMessage());
-			}
+        // Creates a new CurrencyExchangeReader object
+        CurrencyExchangeReader currReader = new CurrencyExchangeReader();
 
+        try 
+        {
+        	Config config = confReader.readConfig("config.txt");
+        	exchangeRates = currReader.read(config);
+        }
+        catch (IOException e) 
+        {
+            // Handles the exception here, e.g. print an error message
+            System.out.println(e.getMessage());
+        }
     }
+
     
     // This method converts a balance from a specified currency to a default currency
     public double getCurrency(String currency, double balance, String USD)

@@ -30,7 +30,6 @@ public class Messages
     public static final String ENTER_DEPOSIT_AMOUNT =  "Enter the amount to deposit: ";
     public static final String ENTER_WITHDRAW_AMOUNT =  "Enter the withdrawal amount: ";
     public static final String ENTER_ACCOUNT_CURRENCY = "Enter Account Currency:";
- 
     
     // Menu commands
     public static final String ENTER_PROGRAM_EXIT = "Exiting program...";
@@ -96,5 +95,7 @@ public class Messages
     public static final String CURRENCY_DEFAULT = "USD";
     public static final String CURRENCY_NOT_AVAILABLE = "Error: Currency not available. Please enter a different currency code.";
 	public static final String CURRENCIES_MUST_BE_USD = "One of the currencies must be USD";
+	public static final String CURRENCY_FILE_DOWNLOAD_FAILED = "The attempt to retrieve exchange rates from URL failed, Attempting to load from file\n";
+	public static final String CURRENCY_IS_FALSE = "Currency conversion service and Foreign Currency accounts have been chosen to not be available.";
 }
 
