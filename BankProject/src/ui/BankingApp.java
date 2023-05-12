@@ -75,7 +75,7 @@ public class BankingApp
                     currencyConversion(); // Calls method to convert currency
                     break;
                 case 11:
-                						 // Calls method to save data to a file
+                	saveBankDataToFile(); // Calls method to save data to a file
                     break;
                 case 12:
                 	System.out.println(Messages.ENTER_PROGRAM_EXIT); // Displays message that the program is exiting
